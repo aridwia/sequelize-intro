@@ -6,10 +6,20 @@ var router = express.Router();
 const model = require('../models');
 
 router.get('/',(req,res) => {
-  model.Subject.findAll().then(data => {
-      res.render('subjects',{sbjdata:data})
-    })
+  model.Subject.findAll({
+    order: [['subject_name', 'ASC']],
+    include: [model.Teacher]
+  })
+  .then(data => {
+    // console.log(data.Teachers[0].id);
+    res.render('subjects', {dataSubject: data});
+  })
 })
+
+// model.Subject.findAll().then(data => {
+//       res.render('subjects',{sbjdata:data})
+//     })
+// })
 
 
 router.get('/addsubject',(req,res) => {

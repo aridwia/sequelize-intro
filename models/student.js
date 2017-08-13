@@ -18,5 +18,11 @@ module.exports = function(sequelize, DataTypes) {
       }
     }
   });
+  // Student.associate = (models) => {
+  //   Student.belongs
+  // }
+
+
+
   return Student;
 };

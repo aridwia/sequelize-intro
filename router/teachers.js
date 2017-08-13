@@ -6,7 +6,10 @@ var router = express.Router();
 const model = require('../models');
 
 router.get('/',(req,res) => {
-  model.Teacher.findAll()
+  model.Teacher.findAll({
+    order: [['first_name','ASC']],
+    include: [model.Subject]
+  })
     .then(data => {
       res.render('teachers',{data:data})
     })
@@ -27,7 +30,8 @@ router.post('/',(req,res) => {
   model.Teacher.create({
     first_name : req.body.firstname,
     last_name : req.body.lastname,
-    email : req.body.email
+    email : req.body.email,
+    // SubjectId : req.body.SubjectId
   })
     .then(function() {
         res.redirect('/teachers')
@@ -42,44 +46,73 @@ router.post('/',(req,res) => {
 })
 
 router.get('/editteacher/:id',(req,res) => {
-  model.Teacher.findById(req.params.id)
-    .then((databyid) => {
-      res.render('editteacher',{data:databyid})
+  model.Teacher.findById(req.params.id, {include: [model.Subject]})
+  .then(function(rows) {
+    model.Subject.findAll()
+    .then(dataSemua => {
+      res.render('editteacher',{data:rows, data2: dataSemua})
     })
-  // res.send('tes')
-})
+  })
+ })
+//**sebelum association
+//   model.Teacher.findById(req.params.id)
+//     .then((databyid) => {
+//       res.render('editteacher',{data:databyid})
+//     })
+//   // res.send('tes')
+// })
 
 router.post('/editteacher/:id', (req, res) => {
-  model.Teacher.findOne({
-    where:{
-     email: req.body.email
-    }
+  model.Teacher.update({
+      first_name : req.body.first_name,
+      last_name : req.body.last_name,
+      email : req.body.email,
+      SubjectId : req.body.subject || null
+    }, {
+      where : {
+        id:req.params.id
+      }
+    })
+    .then(function() {
+      res.redirect('/teachers')
+    })
+    .catch(err => {
+      console.log(err);
+    })
   })
-.then(function(result){
- // if(!result || req.body.email === req.body.emailOri){
-   model.Teacher.update({
-     first_name: req.body.first_name,
-     last_name: req.body.last_name,
-     email: req.body.email,
-     },{
-     where:{
-       id:req.params.id
-     }
-   })
-   .then(function(){
-     res.redirect('/teachers');
-   })
-   .catch(function(err){
-     model.Student.findById(req.params.id)
-     .then(function(rows){
-       res.render('editteacher',{data:rows, errmsg: err})
-     })
-   })
- // } else {
- //   res.send('email sudah di gunakan')
 
-  })
-})
+
+//**** sebelum asosiasi
+//   model.Teacher.findOne({
+//     where:{
+//      email: req.body.email
+//     }
+//   })
+// .then(function(result){
+//  // if(!result || req.body.email === req.body.emailOri){
+//    model.Teacher.update({
+//      first_name: req.body.first_name,
+//      last_name: req.body.last_name,
+//      email: req.body.email,
+//      },{
+//      where:{
+//        id:req.params.id
+//      }
+//    })
+//    .then(function(){
+//      res.redirect('/teachers');
+//    })
+//    .catch(function(err){
+//      model.Student.findById(req.params.id)
+//      .then(function(rows){
+//        res.render('editteacher',{data:rows, errmsg: err})
+//      })
+//    })
+//  // } else {
+//  //   res.send('email sudah di gunakan')
+//
+//   })
+// })
 
 router.get('/delete/:id', (req, res) => {
    var id = req.params.id;

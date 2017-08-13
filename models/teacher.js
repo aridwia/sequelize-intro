@@ -5,6 +5,7 @@ module.exports = function(sequelize, DataTypes) {
     last_name: DataTypes.STRING,
     createdAt: new Date(),
     updatedAt: new Date(),
+    SubjectId: {type: DataTypes.INTEGER, allowNull:true},
     email: {
       type: DataTypes.STRING,
       validate: {
@@ -20,6 +21,8 @@ module.exports = function(sequelize, DataTypes) {
       }
     }
   });
-
+  Teacher.associate = (models) => {
+  Teacher.belongsTo(models.Subject);
+  }
   return Teacher;
 };

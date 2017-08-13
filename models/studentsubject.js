@@ -1,7 +1,9 @@
 'use strict';
 module.exports = function(sequelize, DataTypes) {
-  var Subject = sequelize.define('Subject', {
-    subject_name: DataTypes.STRING
+  var StudentSubject = sequelize.define('StudentSubject', {
+    StudentId: DataTypes.INTEGER,
+    SubjectId: DataTypes.INTEGER,
+    Score: DataTypes.INTEGER
   }, {
     classMethods: {
       associate: function(models) {
@@ -9,9 +11,5 @@ module.exports = function(sequelize, DataTypes) {
       }
     }
   });
-  Subject.associate = (models) => {
-  Subject.hasMany(models.Teacher);
- }
-
- return Subject;
+  return StudentSubject;
 };

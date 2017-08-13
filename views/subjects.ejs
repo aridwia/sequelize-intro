@@ -23,18 +23,28 @@
   <tr>
     <th>ID </th>
     <th>Subject Name </th>
+    <th>Pengajar </th>
     <th>Edit</th>
     <th>Delete</th>
   </tr>
-<!-- <% var i = 1 %> -->
-<% sbjdata.forEach(function(subject) { %>
-   <tr>
-    <td><%= subject.id %></td>
-    <td><%= subject.subject_name %></td>
-    <td><a href="/subjects/editsubject/<%=subject.id%>"> Edit </a></td>
-    <td><a href="/subjects/delete/<%=subject.id%>"> Delete </a></td>
-    </tr>
-<% }) %>
+  <% var no = 1; dataSubject.forEach(ds => {%>
+        <tr>
+          <td><%= no %> <% no+=1%></td>
+          <td><%= ds.subject_name %></td>
+          <%if (ds.Teachers.length != 0) {%>
+            <td>
+              <% for (var i = 0; i < ds.Teachers.length; i++ ) { %>
+                <% var no_guru = 1 %>
+                <%= i+1%>. <%= ds.Teachers[i].first_name %> <%= ds.Teachers[i].last_name %><br>
+              <% } %>
+            </td>
+          <%} else {%>
+            <td><center> - </center></td>
+          <% } %>
+          <td><a href='subject/<%= ds.id %>/enrolledstudents'>Enrolled Students</a></td>
+          <td><a href='subject/edit/<%= ds.id %>'> Edit</a> || <a href='subject/delete/<%= ds.id %>' onclick="return confirm('Yakin mau menghapus data ini?');"> Delete</a></td>
+        </tr>
+      <% }) %>
 </table>
 </div>
   <br>
