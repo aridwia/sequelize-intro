@@ -13,7 +13,7 @@ router.get('/',(req,res) => {
 
 
 router.get('/addsubject',(req,res) => {
-  res.render('addsubject',{})
+  res.render('addsubject',{errmsg:""})
 })
 
 router.post('/',(req,res) => {

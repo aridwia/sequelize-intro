@@ -10,12 +10,13 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   </head>
   <body>
-<h1> Data Students </h1>
-
+<h1 align=center> Data Students </h1>
+<div class="container">
 <td><a href="/"> Home </a></td>
 <br>
 <br>
 <p><a href="/students/addstudent">Add Student</a></p>
+
 
 <table class="table table-striped">
   <tr>
@@ -36,10 +37,11 @@
     <td><%= student.last_name %></td>
     <td><%= student.email %></td>
     <td><center><a href="students/editstudent/<%=student.id%>">Edit</a></center></td>
-    <td><center><a href="students/delete/<%=student.id%>">Delete</a></center></td>
+    <td><center><a href="students/delete/<%=student.id%>" onclick="return confirm('hapus data <%=student.first_name%>?');">Delete</a></center></td>
     </tr>
 <% }) %>
 </table>
+</div>
 <br>
 <br>
 

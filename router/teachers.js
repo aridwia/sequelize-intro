@@ -13,22 +13,33 @@ router.get('/',(req,res) => {
 })
 
 router.get('/addteacher',(req,res) =>{
-  res.render('addteacher',{})
+  res.render('addteacher',{errmsg:""})
 })
 
 router.post('/',(req,res) => {
+  model.Student.findOne({
+     where:{
+      email:req.body.email
+     }
+   })
+ .then(function(result){
+  if (!result){
   model.Teacher.create({
     first_name : req.body.firstname,
     last_name : req.body.lastname,
     email : req.body.email
   })
-    .then(function(data) {
+    .then(function() {
         res.redirect('/teachers')
     })
-    .catch(function(error) {
-        console.log(error)
+    .catch(function(err) {
+      res.render('addteacher', {errmsg: err.message});
     })
+  }else {
+    res.render('addteacher',{errmsg: 'Email telah terdaftar'})
+  }
   })
+})
 
 router.get('/editteacher/:id',(req,res) => {
   model.Teacher.findById(req.params.id)
