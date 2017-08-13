@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Give Score Page</title>
+    <style>
+      p {
+        color: red;
+        font-family: Helvetica, Arial, sans-serif;
+        text-align: center;
+        text-decoration-style: dashed;
+        }
+      div{
+        border-style: double;
+        border-color: red;
+        /*border-style: solid;*/
+        border-width: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Beri Nilai</h1>
+    <a href='/subjects/<%= dataSubject[0].id%>/enrolledstudents'>Back To Mata Pelajaran</a>  <%= dataSubject[0].subject_name%>
+
+      <form action="/subjects/<%= data[0].id%>/<%= dataSubject[0].id%>/givescore" method="post">
+        <fieldset>
+          <legend>Personal information:</legend>
+          Id:<br>
+          <input type="text" name="StudentId" value="<%= data[0].id%>" disabled/>
+          <br>
+          First name:<br>
+          <input type="text" name="first_name" value="<%= data[0].first_name%>" disabled/>
+          <br>
+          Last name:<br>
+          <input type="text" name="last_name" value="<%= data[0].last_name%>" disabled />
+          <br>
+          Subject:<br>
+          <input type="text" name="subject_name" value="<%= dataSubject[0].subject_name%>" disabled />
+          <br>
+          Score:<br>
+          <input type="text" name="score" placeholder="Masukkan Nilai" />
+          <br>
+            <button type="submit">Submit</button>
+        </fieldset>
+      </form>
+    </div>
+  </body>
+</html>

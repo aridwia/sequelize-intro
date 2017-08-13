@@ -41,8 +41,8 @@
           <%} else {%>
             <td><center> - </center></td>
           <% } %>
-          <td><a href='subject/<%= ds.id %>/enrolledstudents'>Enrolled Students</a></td>
-          <td><a href='subject/edit/<%= ds.id %>'> Edit</a> || <a href='subject/delete/<%= ds.id %>' onclick="return confirm('Yakin mau menghapus data ini?');"> Delete</a></td>
+          <td><a href='subjects/<%= ds.id %>/enrolledstudents'>Enrolled Students</a></td>
+          <td><a href='subjects/edit/<%= ds.id %>'> Edit</a> || <a href='subjects/delete/<%= ds.id %>' onclick="return confirm('Yakin mau menghapus data ini?');"> Delete</a></td>
         </tr>
       <% }) %>
 </table>

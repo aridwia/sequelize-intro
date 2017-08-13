@@ -6,7 +6,9 @@ var router = express.Router();
 var model = require('../models');
 
 router.get('/',(req,res) => {
-  model.Student.findAll()
+  model.Student.findAll({
+    order: [['first_name', 'ASC']]
+  })
     .then(data => {
       res.render('students',{stddata:data})
     })
@@ -85,6 +87,58 @@ router.post('/editstudent/:id', (req, res) => {
 })
 
 
+router.get('/delete/:id', (req, res) => {
+   var id = req.params.id;
+   model.Student.destroy({
+     where: { id: id }
+   })
+   .then(function(data) {
+       res.redirect('/students')
+   })
+   .catch(function(error) {
+       console.log(error)
+   })
+})
+
+router.get('/editstudent/:id/addsubjectstudent', function(req, res){
+  model.Student.findById(req.params.id,{
+    include: [model.Subject]
+  })
+  .then(function(rows){
+    model.Subject.findAll()
+    .then(function(dataSubject){
+      console.log(rows);
+      res.render('addsubjectstudent', {data:rows, data2: dataSubject})
+    })
+  })
+  .catch(function(error) {
+      console.log(error)
+  })
+})
+
+router.post('/editstudent/:id/addsubjectstudent', function(req, res) {
+  model.StudentSubject.create({
+    StudentId: req.params.id,
+    SubjectId: req.body.selectSubject
+  }, {
+    where : {
+      id:req.params.id
+    }
+  })
+  .then(function() {
+    res.redirect('/students')
+  })
+  .catch(err => {
+    console.log(err);
+  })
+})
+
+
+module.exports = router;
+
+
+
+
 // router.post('/editstudent/:id',(req,res) => {
 //   var id = req.params.id
 //   model.Student.update({
@@ -122,36 +176,5 @@ router.post('/editstudent/:id', (req, res) => {
 
 
 
-  router.get('/delete/:id', (req, res) => {
-     var id = req.params.id;
-     model.Student.destroy({
-       where: { id: id }
-     })
-     .then(function(data) {
-         res.redirect('/students')
-     })
-     .catch(function(error) {
-         console.log(error)
-     })
-   })
 //   res.redirect('/students')
 // })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-module.exports = router;
