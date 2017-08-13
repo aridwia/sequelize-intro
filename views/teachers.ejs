@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Teachers</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  </head>
+  <body>
+
+
+<h1> Data Teachers </h1>
+
+<td><a href="/"> Home </a></td>
+<br>
+<br>
+<p><a href="/teachers/addteacher">Add Teacher</a></p>
+<br>
+<br>
+<table class="table table-striped">
+  <tr>
+    <th>No </th>
+    <th>First Name </th>
+    <th>Last Name </th>
+    <th>Email</th>
+    <th>Subject</th>
+    <th>Edit</th>
+    <th>Delete</th>
+  </tr>
+<% var i = 1 %>
+<% data.forEach(function(teacher) { %>
+   <tr>
+    <td><%= i %> <% i+=1 %></td>
+    <td><%= teacher.first_name %></td>
+    <td><%= teacher.last_name %></td>
+    <td><%= teacher.email %></td>
+    <%  if(teacher.SubjectId == null ){ %>
+    <td>unassigned</td>
+    <%} else {%>
+    <td><%= teacher.Subject.subject_name %></td>
+    <%}%>
+
+    <td><a href="/teachers/editteacher/<%=teacher.id%>"> Edit </a></td>
+    <td><a href="/teachers/delete/<%=teacher.id%>"> Delete </a></td>
+    </tr>
+<% }) %>
+</table>
+<br>
+<a href="/teachers/addteacher">Add Teacher</a>
+<br>
+<br>
+
+  </body>
+</html>
