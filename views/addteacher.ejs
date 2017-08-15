@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <style>
+    h1 {color:red;}
+    p {
+      color: red;
+      font-family: Helvetica, Arial, sans-serif;
+      text-align: center;
+      text-decoration-style: dashed;
+      }
+    div{
+      border-style: double;
+      border-color: red;
+      /*border-style: solid;*/
+      border-width: 5px;
+    }
+    </style>
+  </head>
+  <body>
+    <!DOCTYPE html>
+<html>
+<body>
+
+  <% if(errmsg != ''){%>
+    <div>
+      <p><%= errmsg%></p>
+    </div>
+  <%}%>
+
+
+<form action="/teachers" method="post">
+  <fieldset>
+    <legend>Personal information:</legend>
+    First name:<br>
+    <input type="text" name="firstname" placeholder="input your first name">
+    <br>
+    Last name:<br>
+    <input type="text" name="lastname" placeholder="input your last name">
+    <br>
+    Email:<br>
+    <input type="text" name="email" placeholder="input your email">
+    <br><br>
+    <!-- SubjectId:<br>
+    <input type="text" name="SubjectId" placeholder="input Subject ID">
+    <br><br> -->
+    <input type="submit" value="Submit">
+  </fieldset>
+</form>
+
+</body>
+</html>
+
+  </body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <title>Subject Page</title>
+  </head>
+  <body>
+    <h1 align=center>Data Subject <%= dataSubject[0].Subject.subject_name %></h1>
+
+     <div class="container">
+     <a href="/subjects">Back</a>
+      <table class="table table-striped">
+        <tr>
+          <th>No</th>
+          <th>Nama Murid</th>
+          <th>Nilai</th>
+        </tr>
+        <%var no = 1; for(var i = 0 ; i < dataSubject.length; i++) {%>
+            <tr>
+              <td><%= no %><% no += 1 %></td>
+              <td><%= dataSubject[i].Student.first_name %> <%= dataSubject[i].Student.last_name %></td>
+              <% if(dataSubject[i].Score == null) { %>
+                <td><a href="/subjects/<%= dataSubject[i].StudentId %>/<%= dataSubject[i].SubjectId %>/givescore"> Input Nilai</a></td>
+              <% } else { %>
+                <td><%= dataSubject[i].Score%></td>
+              <%}%>
+            </tr>
+        <% } %>
+      </table>
+    </div>
+  </body>
+</html>

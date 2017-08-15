@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Teachers</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  </head>
+  <body>
+<h1 align=center> Data Students </h1>
+<div class="container">
+<td><a href="/dashboard"> Home </a></td>
+<br>
+<br>
+<p><a href="/students/addstudent">Add Student</a></p>
+
+
+<table class="table table-striped">
+  <tr>
+    <th>No </th>
+    <th>First Name </th>
+    <th>Last Name </th>
+    <!-- <th>Created at </th>
+    <th>updated at</th> -->
+    <th>Email</th>
+    <th>Action</th>
+    <th>Edit</th>
+    <th>Delete</th>
+  </tr>
+<% var i = 1 %>
+<% stddata.forEach(function(student) { %>
+   <tr>
+    <td><%= i %> <% i+=1 %></td>
+    <td><%= student.first_name %></td>
+    <td><%= student.last_name %></td>
+    <td><%= student.email %></td>
+    <td><a href="students/editstudent/<%=student.id%>/addsubjectstudent">add subject</a></td>
+    <td><center><a href="students/editstudent/<%=student.id%>">Edit</a></center></td>
+    <td><center><a href="students/delete/<%=student.id%>" onclick="return confirm('hapus data <%=student.first_name%>?');">Delete</a></center></td>
+    </tr>
+<% }) %>
+</table>
+</div>
+<br>
+<br>
+
+  </body>
+</html>

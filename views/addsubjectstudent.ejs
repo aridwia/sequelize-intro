@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <style>
+      p {
+        color: red;
+        font-family: Helvetica, Arial, sans-serif;
+        text-align: center;
+        text-decoration-style: dashed;
+        }
+      div{
+        border-style: double;
+        border-color: red;
+        /*border-style: solid;*/
+        border-width: 5px;
+      }
+    </style>
+    <title>Add Subject</title>
+  </head>
+  <body>
+    <h1>Assign Subject</h1>
+    <a href="/students">Back</a>
+      <form action="/students/editstudent/<%= data.id %>/addsubjectstudent" method="post">
+        <fieldset>
+          <legend>Personal information:</legend>
+          Id:<br>
+          <input type="text" name="StudentId" value="<%= data.id %>" disabled/>
+          <br>
+          First name:<br>
+          <input type="text" name="first_name" value="<%= data.first_name %>" disabled/>
+          <br>
+          Last name:<br>
+          <input type="text" name="last_name" value="<%= data.last_name %>" disabled/>
+          <br>
+          Email:<br>
+          <input type="email" name="email" value="<%= data.email %>" disabled/>
+          <br>
+          Subject:<br>
+          <% if(data.Subjects[0] == null) { %>
+            <select name="selectSubject">
+              <option value="">--Select Mata Pelajaran--</option>
+              <% data2.forEach(function(d2){ %>
+              <option value="<%= d2.id %>"><%= d2.subject_name %></option>
+              <% }) %>
+            </select>
+          <% } else {%>
+            <select name="selectSubject">
+              <option value = "<%= data.Subjects[0].StudentSubjects.StudentId %>" selected="<%= data.Subjects[0].StudentSubjects.StudentId %>"><%= data.Subjects[0].subject_name %></option>
+              <% data2.forEach(d2 => { %>
+                <option value="<%= d2.id %>"><%= d2.subject_name %></option>
+              <% }) %>
+            </select>
+          <%}%>
+          <input type="submit" value="Submit">
+        </fieldset>
+      </form>
+  </body>
