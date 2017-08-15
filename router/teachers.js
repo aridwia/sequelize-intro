@@ -4,6 +4,15 @@ const express = require('express');
 const app = express();
 var router = express.Router();
 const model = require('../models');
+const userauth = require('../helpers/userauth.js');
+
+router.use((req,res, next)=>{
+  if(req.session.user.role == 'headmaster'){
+     next();
+  } else {
+    res.send('Maaf anda tidak diizinkan mengakses halaman ini');
+  }
+})
 
 router.get('/',(req,res) => {
   model.Teacher.findAll({
@@ -11,6 +20,8 @@ router.get('/',(req,res) => {
     include: [model.Subject]
   })
     .then(data => {
+      let userSession = req.session.user
+      let getUserAuth = userauth.userRole(userSession.role)
       res.render('teachers',{data:data})
     })
 })
@@ -50,6 +61,8 @@ router.get('/editteacher/:id',(req,res) => {
   .then(function(rows) {
     model.Subject.findAll()
     .then(dataSemua => {
+      let userSession = req.session.user
+      let getUserAuth = userauth.userRole(userSession.role)
       res.render('editteacher',{data:rows, data2: dataSemua})
     })
   })

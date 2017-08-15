@@ -4,6 +4,15 @@ const express = require('express');
 const app = express();
 var router = express.Router();
 const model = require('../models');
+const userauth = require('../helpers/userauth.js');
+
+router.use((req,res, next)=>{
+  if(req.session.user.role == 'academic' || req.session.user.role == 'headmaster'){
+     next();
+  } else {
+    res.send('Maaf anda tidak diizinkan mengakses halaman ini');
+  }
+})
 
 router.get('/',(req,res) => {
   model.Subject.findAll({
@@ -11,6 +20,8 @@ router.get('/',(req,res) => {
     include: [model.Teacher]
   })
   .then(data => {
+    let userSession = req.session.user
+    let getUserAuth = userauth.userRole(userSession.role)
     // console.log(data.Teachers[0].id);
     res.render('subjects', {dataSubject: data});
   })
@@ -23,6 +34,8 @@ router.get('/',(req,res) => {
 
 
 router.get('/addsubject',(req,res) => {
+  let userSession = req.session.user
+ let getUserAuth = userauth.userRole(userSession.role)
   res.render('addsubject',{errmsg:""})
 })
 
@@ -42,6 +55,8 @@ router.post('/',(req,res) => {
 router.get('/editsubject/:id',(req,res) => {
   model.Subject.findById(req.params.id)
     .then((databyid) => {
+      let userSession = req.session.user
+      let getUserAuth = userauth.userRole(userSession.role)
       res.render('editsubject',{data:databyid})
     })
   // res.send('tes')
@@ -87,6 +102,8 @@ router.get('/delete/:id', (req, res) => {
    })
    .then(data => {
     //  console.log(data);
+    let userSession = req.session.user
+  let getUserAuth = userauth.userRole(userSession.role)
      res.render('subject-enrolledstudents', {dataSubject: data});
    })
  })
@@ -104,6 +121,8 @@ router.get('/delete/:id', (req, res) => {
         }
       })
       .then(datasubject => {
+        let userSession = req.session.user
+      let getUserAuth = userauth.userRole(userSession.role)
         res.render('subject-givescore', {data: datasiswa, dataSubject: datasubject})
       })
     })

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include layout/page-header %>
+  </head>
+  <body>
+    <h1> Selamat datang, <%- userSession.username %></h1>
+    terdaftar sebagai: <%- userSession.role %>
+  <ul>
+    <% getUserAuth.forEach(menu => { %>
+      <button id="btn-start" onclick="window.location='<%- menu %>'"><%- menu %></button>
+    <% })%>
+  </ul>
+  <ul>
+    <button id="btn-back" onclick="window.location='/logout'">Logout</button>
+
+  </ul>
+  </body>
+</html>

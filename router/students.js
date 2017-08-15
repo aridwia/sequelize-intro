@@ -4,17 +4,30 @@ const express = require('express');
 const app = express();
 var router = express.Router();
 var model = require('../models');
+const userauth = require('../helpers/userauth.js');
+
+router.use((req,res, next)=>{
+  if(req.session.user.role == 'headmaster' || req.session.user.role == 'teacher' || req.session.user.role == 'academic'){
+     next();
+  } else {
+    res.send('Maaf anda tidak diizinkan mengakses halaman ini');
+  }
+})
 
 router.get('/',(req,res) => {
   model.Student.findAll({
     order: [['first_name', 'ASC']]
   })
     .then(data => {
+      let userSession = req.session.user
+      let getUserAuth = userauth.userRole(userSession.role)
       res.render('students',{stddata:data})
     })
 })
 
 router.get('/addstudent',(req,res) =>{
+  let userSession = req.session.user
+  let getUserAuth = userauth.userRole(userSession.role)
   res.render('addstudent',{errmsg: ''})
 })
 
@@ -61,7 +74,9 @@ router.post('/editstudent/:id', (req, res) => {
     }
   })
 .then(function(result){
- if(!result || req.body.email === req.body.emailOri){
+  let userSession = req.session.user
+  let getUserAuth = userauth.userRole(userSession.role)
+  if(!result || req.body.email === req.body.emailOri){
    model.Student.update({
      first_name: req.body.first_name,
      last_name: req.body.last_name,
@@ -108,6 +123,8 @@ router.get('/editstudent/:id/addsubjectstudent', function(req, res){
     model.Subject.findAll()
     .then(function(dataSubject){
       console.log(rows);
+      let userSession = req.session.user
+      let getUserAuth = userauth.userRole(userSession.role)
       res.render('addsubjectstudent', {data:rows, data2: dataSubject})
     })
   })
